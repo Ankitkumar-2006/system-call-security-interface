@@ -1,0 +1,242 @@
+/* Variables and Base Styles */
+:root {
+    --primary-color: #007bff; /* Blue for primary actions/branding */
+    --secondary-color: #28a745; /* Green for success/allow */
+    --danger-color: #dc3545; /* Red for deny/alerts */
+    --background-color: #f4f7f9;
+    --card-background: #ffffff;
+    --text-color: #333;
+    --code-background: #2d2d2d;
+    --code-text: #f8f8f2;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    width: 95%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Header and Navigation */
+header {
+    background-color: var(--code-background);
+    color: var(--code-text);
+    padding: 15px 0;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 700;
+}
+
+nav a {
+    color: var(--code-text);
+    text-decoration: none;
+    margin-left: 25px;
+    padding: 5px 0;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+nav a.active-link {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+/* Section Management */
+.section-card {
+    background: var(--card-background);
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hidden-section {
+    display: none;
+}
+
+h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.metric-box {
+    background-color: #e6f0ff;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 5px solid var(--primary-color);
+    font-weight: 700;
+    color: #0056b3;
+}
+.metric-box span {
+    display: block;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-top: 5px;
+    color: var(--text-color);
+}
+.metric-box.status-deny { border-left-color: var(--danger-color); background-color: #ffe0e3; }
+.metric-box.status-high { border-left-color: #ffc107; background-color: #fff4e2; }
+
+/* Live Feed Panel */
+.live-feed-panel {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 6px;
+}
+.refresh-rate {
+    font-size: 0.8em;
+    color: #666;
+    font-weight: 400;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.9em;
+    font-family: 'Space Mono', monospace;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #e9ecef;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Table Row Status */
+.row-deny { background-color: #fde7e7; color: var(--danger-color); }
+.row-auth-fail { background-color: #fff0d1; color: #cc9900; }
+.row-allow { color: var(--secondary-color); }
+
+/* Policy Editor Styles */
+.policy-creation, .active-policies {
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 700;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.code-block-input {
+    background-color: var(--code-background);
+    color: var(--code-text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85em;
+    resize: vertical;
+}
+
+.save-button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s;
+}
+.save-button:hover {
+    background-color: #0056b3;
+}
+
+#active-policy-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+#active-policy-list li {
+    background-color: #f0f8ff;
+    border-left: 5px solid var(--primary-color);
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+/* Audit Log Styles */
+.log-search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#log-search-query {
+    flex-grow: 1;
+}
+
+.search-button, .export-button {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search-button:hover { background-color: #5a6268; }
+.export-button { background-color: var(--secondary-color); }
+.export-button:hover { background-color: #1e7e34; }
+
+.auth-note {
+    font-style: italic;
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 30px;
+    font-size: 0.9em;
+}

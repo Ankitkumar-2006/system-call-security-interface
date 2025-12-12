@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syscall Security Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Space+Mono:wght=400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🛡️ Secure Syscall Interface</h1>
+            <nav>
+                <a href="#monitor" class="active-link">Live Monitor</a>
+                <a href="#policy">Policy Editor</a>
+                <a href="#audit">Audit Logs</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section id="monitor" class="section-card active-section">
+            <h2>📊 Real-Time Syscall Activity</h2>
+            <div class="metrics-grid">
+                <div class="metric-box">Total Events: <span id="total-events">0</span></div>
+                <div class="metric-box status-deny">Blocked Calls: <span id="blocked-count">0</span></div>
+                <div class="metric-box status-high">Authentication Failures: <span id="auth-fail-count">0</span></div>
+                <div class="metric-box">Top Syscall: <span id="top-syscall">wait4</span></div>
+            </div>
+
+            <div class="live-feed-panel">
+                <h3>Live Syscall Stream <span class="refresh-rate">(Updates every 1s)</span></h3>
+                <table id="syscall-feed">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Action</th>
+                            <th>Syscall</th>
+                            <th>PID/Process</th>
+                            <th>User/Identity</th>
+                            <th>Auth Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="policy" class="section-card hidden-section">
+            <h2>📜 Policy Management & Enforcement</h2>
+            <p>Define fine-grained rules using a declarative JSON/Rego language.</p>
+            
+            <div class="policy-creation">
+                <h3>New Policy Rule: Deny ptrace</h3>
+                <label for="policy-name">Policy Name:</label>
+                <input type="text" id="policy-name" value="Prevent Ptrace Debugging">
+                
+                <label for="syscall-target">Target Syscall:</label>
+                <select id="syscall-target">
+                    <option value="ptrace">ptrace</option>
+                    <option value="execve">execve</option>
+                    <option value="openat">openat</option>
+                </select>
+                
+                <label for="condition">Condition (JSON Snippet):</label>
+                <textarea id="condition" rows="6" readonly class="code-block-input">
+{
+    "user_not_in": ["root", "debug_group"],
+    "binary_hash_not_approved": true 
+}
+                </textarea>
+
+                <label for="action">Action:</label>
+                <select id="action">
+                    <option value="deny">Deny</option>
+                    <option value="allow">Allow</option>
+                    <option value="audit_only">Audit Only</option>
+                </select>
+                
+                <button onclick="savePolicy()" class="save-button">Save & Deploy Policy</button>
+            </div>
+
+            <div class="active-policies">
+                <h3>Active Policies</h3>
+                <ul id="active-policy-list">
+                    <li>[🛡️ ACTIVE] Policy: Prevent Ptrace Debugging (Action: Deny)</li>
+                    <li>[✅ ACTIVE] Policy: Allow Web Server Access to /var/www (Action: Allow)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="audit" class="section-card hidden-section">
+            <h2>🔎 Searchable Audit Logs (Tamper-Resistant)</h2>
+            <div class="log-search-container">
+                <input type="text" id="log-search-query" placeholder="Search by Syscall, User, PID, or Hash...">
+                <button onclick="searchLogs()" class="search-button">Search</button>
+                <button onclick="exportLogs()" class="export-button">Export (JSON/CSV)</button>
+            </div>
+
+            <p class="auth-note">Logs are cryptographically signed and stored with an integrity hash chain.</p>
+
+            <table id="audit-log-results">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Outcome</th>
+                        <th>Identity Hash</th>
+                        <th>Syscall Args (Truncated)</th>
+                        <th>Integrity Hash</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Secure Syscall Interface Prototype. Built for Enhanced Security.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
